@@ -21,7 +21,7 @@ public class Items {
     protected String name;
     protected String pris;
 
-    public Items(String name, String pris ){
+    public Items(String name, String pris){
         this.name = name;
         this.pris = pris;
     }

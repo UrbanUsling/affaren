@@ -16,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Embeddable
-public class Customer implements Serializable {
+public class Customers implements Serializable {
 
     @Id
     @GeneratedValue
@@ -24,7 +24,7 @@ public class Customer implements Serializable {
     protected String name;
     protected String personNr;
 
-    public Customer(String name, String personNr) {
+    public Customers(String name, String personNr) {
         this.name = name;
         this.personNr = personNr;
     }

@@ -1,0 +1,67 @@
+version: "3.9"
+
+networks:
+  storing:
+    driver: bridge
+services:
+  affaren:
+    image: ${AFFARENIMAGE}
+    container_name: affarenContainer
+    networks:
+      - storing
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD-SHELL", "exit"]
+      interval: 20s
+      timeout: 30s
+
+
+  Customer:
+    image: ${CUSTOMERIMAGE}
+    container_name: customerContainer
+    restart: always
+    networks:
+      - storing
+    environment:
+      - DB_PASSWORD=${DB_PASSWORD}
+      - MYSQL_HOST=affaren
+    ports:
+      - "8081:8080"
+    depends_on:
+      affaren:
+        condition: service_healthy
+
+  orders:
+    image: ${ORDERSIMAGE}
+    container_name: ordersContainer
+    restart: always
+    networks:
+      - storing
+    environment:
+      - DB_PASSWORD=${DB_PASSWORD}
+      - MYSQL_HOST=affaren
+      - ITEMS_SERVICE_HOST=${ITEMS_SERVICE_HOST}
+      - ITEMS_SERVICE_PORT=${ITEMS_SERVICE_PORT}
+      - CUSTOMERS_SERVICE_HOST=${CUSTOMERS_SERVICE_HOST}
+      - CUSTOMERS_SERVICE_PORT=${CUSTOMERS_SERVICE_PORT}
+    ports:
+      - "8083:8080"
+    depends_on:
+      affaren:
+        condition: service_healthy
+
+  items:
+    image: ${ITEMSIMAGE}
+    container_name: itemsContainer
+    restart: always
+    networks:
+      - storing
+    environment:
+      - DB_PASSWORD=${DB_PASSWORD}
+      - MYSQL_HOST=affaren
+    ports:
+      - "8082:8080"
+    depends_on:
+      affaren:
+        condition: service_healthy

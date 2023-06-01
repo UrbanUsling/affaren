@@ -19,24 +19,22 @@ public class CustomerController {
     }
 
     @RequestMapping("customers")
-    public List<Customer> getAllCustomers(){
-        log.info("All customers returned");
-        log.error("All customers returned in ERROR mess");
-        log.warn("All customers returned in WARNING mess");
-        log.debug("All customers returned in DEBUG mess");
+
+    public List<Customers> getAllCustomers(){
+
         return repo.findAll();
     }
     @RequestMapping("customers/{id}")
-    public Customer findById(@PathVariable long id){
+    public Customers findById(@PathVariable long id){
         log.info("Costumer found with id "+id);
         return repo.findById(id).get();
     }
 
 
     @RequestMapping("customers/add")
-    public List<Customer> addCustomers(@RequestParam String name, @RequestParam String PersonNr){
-        repo.save(new Customer(name, PersonNr));
-        log.info("Customer added");
+    public List<Customers> addCustomers(@RequestParam String name, @RequestParam String PersonNr){
+        repo.save(new Customers(name, PersonNr));
+        log.info("Customers added");
         return repo.findAll();
 
     }
