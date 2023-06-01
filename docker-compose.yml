@@ -3,10 +3,12 @@ version: "3.9"
 networks:
   storing:
     driver: bridge
+
 services:
   affaren:
     image: ${AFFARENIMAGE}
     container_name: affarenContainer
+
     networks:
       - storing
     ports:
@@ -20,7 +22,7 @@ services:
   Customer:
     image: ${CUSTOMERIMAGE}
     container_name: customerContainer
-    restart: always
+
     networks:
       - storing
     environment:
@@ -35,7 +37,7 @@ services:
   orders:
     image: ${ORDERSIMAGE}
     container_name: ordersContainer
-    restart: always
+
     networks:
       - storing
     environment:
@@ -54,7 +56,7 @@ services:
   items:
     image: ${ITEMSIMAGE}
     container_name: itemsContainer
-    restart: always
+
     networks:
       - storing
     environment:
